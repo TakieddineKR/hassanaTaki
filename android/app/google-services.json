@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "18147387388",
+    "project_id": "hassana-e866c",
+    "storage_bucket": "hassana-e866c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:18147387388:android:ae4991e4f44386ced5f479",
+        "android_client_info": {
+          "package_name": "com.example.hassana"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu31Ak9Y0uZCl_ZPlKkU91EJMatX2c_24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
