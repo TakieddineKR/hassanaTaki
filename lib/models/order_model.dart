@@ -41,7 +41,7 @@ class OrderModel {
         userName: json['userName'],
         orderStatus: json['orderStatus'],
         orderDescription: json['orderDescription'],
-        orderDate: json['orderDate'],
+        orderDate: json['orderDate']?.toDate(),
         orderAddress: json['orderAddress'],
         orderPhone: json['orderPhone'],
         orderAmount: json['orderAmount'],

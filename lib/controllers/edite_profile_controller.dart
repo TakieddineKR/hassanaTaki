@@ -25,10 +25,7 @@ class ProfileController extends GetxController {
   void fetchData() async {
     isLoading(true);
     try {
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .get();
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
       if (userDoc.exists && userDoc.data() != null) {
         Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
         organizationNameController.text = userData['name'] ?? '';
@@ -47,8 +44,7 @@ class ProfileController extends GetxController {
   void applyModifications() async {
     isLoading(true);
     try {
-      DocumentReference userDoc =
-          FirebaseFirestore.instance.collection('users').doc(userId);
+      DocumentReference userDoc = FirebaseFirestore.instance.collection('users').doc(userId);
       await userDoc.update({
         'name': organizationNameController.text,
         'adress': locationController.text,
@@ -56,8 +52,7 @@ class ProfileController extends GetxController {
         // Note: For password updates, you should handle this through Firebase Auth
       });
       if (passwordController.text.isNotEmpty) {
-        await FirebaseAuth.instance.currentUser!
-            .updatePassword(passwordController.text);
+        await FirebaseAuth.instance.currentUser!.updatePassword(passwordController.text);
       }
       Get.snackbar('Success', 'Profile updated successfully');
     } catch (e) {

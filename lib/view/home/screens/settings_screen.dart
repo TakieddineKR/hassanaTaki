@@ -8,7 +8,6 @@ import 'dart:io';
 import 'package:hassana/controllers/settings_controller.dart';
 import 'package:hassana/view/home/screens/edit_profile.dart';
 import 'package:hassana/view/home/screens/about_screen.dart'; // Ensure this import points to your AboutScreen
-import '../../../controllers/home_page_controller.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -21,7 +20,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   File? _imageFile;
 
   final SettingsController settingController = Get.put(SettingsController());
-  final HomePageController homePageController = Get.put(HomePageController());
 
   User? user = FirebaseAuth.instance.currentUser;
   String userId = '';
@@ -31,15 +29,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     super.initState();
     userId = user?.uid ?? 'unknown_user';
-    userName = homePageController.userInstance.isNotEmpty
-        ? homePageController.userInstance.first.name
-        : 'Unknown User';
   }
 
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile =
-        await picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {
@@ -77,8 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   radius: 60,
                   backgroundImage: _imageFile != null
                       ? FileImage(_imageFile!)
-                      : const AssetImage('assets/images/photo1.jpg')
-                          as ImageProvider,
+                      : const AssetImage('assets/images/photo1.jpg') as ImageProvider,
                   child: _imageFile == null
                       ? const Icon(
                           Icons.camera_alt,
@@ -98,8 +91,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => EditProfilePage(userId: userId)),
+                  MaterialPageRoute(builder: (context) => EditProfilePage(userId: userId)),
                 );
               },
             ),

@@ -1,88 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hassana/controllers/donations_home_conroller.dart';
 
-import '../../../controllers/home_page_controller.dart';
-import '../../../models/order_model.dart';
+class DonationRequestsPage extends StatelessWidget {
+  final DonationHomeController donationHomeController = Get.put(DonationHomeController());
 
-class HomeDonation extends StatelessWidget {
-  const HomeDonation({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Donation Requests',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const DonationRequestsPage(),
-    );
-  }
-}
-
-class DonationRequestsPage extends StatefulWidget {
-  const DonationRequestsPage({super.key});
-
-  @override
-  DonationRequestsPageState createState() => DonationRequestsPageState();
-}
-
-class DonationRequestsPageState extends State<DonationRequestsPage> {
-  TextEditingController searchController = TextEditingController();
-  List<OrderModel> allRequests = [];
-  List<OrderModel> filteredRequests = [];
-
-  @override
-  void initState() {
-    super.initState();
-    fetchRequests();
-    searchController.addListener(filterList);
-  }
-
-  @override
-  void dispose() {
-    searchController.dispose();
-    super.dispose();
-  }
-
-  void fetchRequests() async {
-    HomePageController homePageController = Get.put(HomePageController());
-
-    if (homePageController.userInstance.isNotEmpty) {
-      String userType = homePageController.userInstance.first.userType;
-      String collectionName =
-          userType == 'ngo' ? 'restaurant_requests' : 'ngo_requests';
-
-      FirebaseFirestore.instance
-          .collection(collectionName)
-          .get()
-          .then((querySnapshot) {
-        List<OrderModel> requests = querySnapshot.docs.map((doc) {
-          return OrderModel.fromJson(doc.data() as Map<String, dynamic>);
-        }).toList();
-
-        setState(() {
-          allRequests = requests;
-          filteredRequests = requests;
-        });
-      });
-    } else {
-      // Handle the case where userInstance is empty
-      print('No user data available');
-    }
-  }
-
-  void filterList() {
-    String query = searchController.text.toLowerCase();
-    setState(() {
-      filteredRequests = allRequests.where((request) {
-        return request.userName.toLowerCase().contains(query);
-      }).toList();
-    });
-  }
+  DonationRequestsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    donationHomeController.fetchDonationRequests();
+    final searchController = donationHomeController.searchController;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Donation Requests'),
@@ -119,51 +47,58 @@ class DonationRequestsPageState extends State<DonationRequestsPage> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: filteredRequests.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  margin: const EdgeInsets.all(
-                      10), // Add some space around each card
-                  color: Colors.lightBlue[50], // Change the color of the list
-                  child: ExpansionTile(
-                    title: Text(filteredRequests[index].userName),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            child: GetBuilder<DonationHomeController>(builder: (controller) {
+              final filteredRequests = controller.filteredRequests;
+              if (controller.isLoadingErrorDonation) {
+                const Center(
+                  child: Text("Something is wrong, please try later"),
+                );
+              }
+              if (controller.isLoadingDonation) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return ListView.builder(
+                itemCount: filteredRequests.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    margin: const EdgeInsets.all(10), // Add some space around each card
+                    color: Colors.lightBlue[50], // Change the color of the list
+                    child: ExpansionTile(
+                      title: Text(filteredRequests[index].userName),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('${filteredRequests[index].orderDescription}\n'
+                              'Location: ${filteredRequests[index].orderAddress}\n'
+                              'Quantity: ${filteredRequests[index].orderAmount}'),
+                          Text(
+                              'Employee Available: ${filteredRequests[index].hasEmployee ? "Yes" : "No"}'), // Display employee availability
+                        ],
+                      ),
+                      trailing: ElevatedButton(
+                        onPressed: () {
+                          // Implement the accept donation logic
+                          print('Donation accepted for ${filteredRequests[index].userName}');
+                        },
+                        child: const Text('Accept'),
+                      ),
                       children: [
-                        Text('${filteredRequests[index].orderDescription}\n'
-                            'Location: ${filteredRequests[index].orderAddress}\n'
-                            'Quantity: ${filteredRequests[index].orderAmount}'),
-                        Text(
-                            'Employee Available: ${filteredRequests[index].hasEmployee ? "Yes" : "No"}'), // Display employee availability
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text('Contact: ${filteredRequests[index].orderPhone}'),
+                              Text('Date: ${filteredRequests[index].orderDate.toString()}'),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                    trailing: ElevatedButton(
-                      onPressed: () {
-                        // Implement the accept donation logic
-                        print(
-                            'Donation accepted for ${filteredRequests[index].userName}');
-                      },
-                      child: const Text('Accept'),
-                    ),
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                                'Contact: ${filteredRequests[index].orderPhone}'),
-                            Text(
-                                'Date: ${filteredRequests[index].orderDate.toString()}'),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+                  );
+                },
+              );
+            }),
           ),
         ],
       ),
