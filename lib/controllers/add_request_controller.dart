@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
@@ -7,15 +8,11 @@ import '../core/enums/order_status_enum.dart';
 import '../core/services/loading_service.dart';
 import '../models/order_model.dart';
 import '../models/user_model.dart';
-import 'home_page_controller.dart';
 
 class AddRequestController extends GetxController {
   GlobalKey<FormState> requestFormKey = GlobalKey<FormState>();
 
   //? HOME PAGE CONTROLLER
-  static final HomePageController homePageController =
-      Get.find<HomePageController>();
-  UserModel userModel = homePageController.userInstance.first;
 
   //! FIELDS
   late String description;
@@ -27,20 +24,30 @@ class AddRequestController extends GetxController {
 
   //!! UUID
   Uuid uuid = const Uuid();
+  Future<UserModel> _fetchUser() async {
+    // Fecth user
+    final String? uid = FirebaseAuth.instance.currentUser?.uid;
+    final usersDocRef = FirebaseFirestore.instance.collection('users').doc(uid!);
+    DocumentSnapshot<Object?> userDoc = await usersDocRef.get();
+    final userModel = UserModel.fromJson(userDoc.data()! as Map<String, dynamic>);
+
+    return userModel;
+  }
 
   Future<void> addRequest() async {
     FormState? formdata = requestFormKey.currentState;
+
     if (formdata != null) {
       if (formdata.validate()) {
         formdata.save();
         LoadingService().showLoading();
 
+        // Fecth user
+        final userModel = await _fetchUser();
+
         // Determine the collection name based on the user type
-        String collectionName = userModel.userType == 'ngo'
-            ? 'ngo_requests'
-            : 'restaurant_requests';
-        CollectionReference requests =
-            FirebaseFirestore.instance.collection(collectionName);
+        String collectionName = userModel.userType == 'ngo' ? 'ngo_requests' : 'restaurant_requests';
+        CollectionReference requests = FirebaseFirestore.instance.collection(collectionName);
 
         String orderId = uuid.v4();
         OrderModel newRequest = OrderModel(
@@ -61,7 +68,9 @@ class AddRequestController extends GetxController {
 
         try {
           await requests.doc(orderId).set(newRequest.toJson());
+
           LoadingService().dismissLoading();
+          LoadingService().showSuccess("Added");
           Get.back();
         } on FirebaseException catch (e) {
           LoadingService().dismissLoading();

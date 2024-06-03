@@ -18,8 +18,7 @@ class LoginController extends GetxController {
         formdata.save();
         LoadingService().showLoading();
         try {
-          UserCredential credential =
-              await FirebaseAuth.instance.signInWithEmailAndPassword(
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: emailController,
             password: passwordController,
           );
@@ -31,9 +30,10 @@ class LoginController extends GetxController {
             LoadingService().showError('No user found for that email.');
           } else if (error.code == 'wrong-password') {
             LoadingService().dismissLoading();
-            LoadingService()
-                .showError('Wrong password provided for that user.');
+            LoadingService().showError('Wrong password provided for that user.');
           }
+          LoadingService().dismissLoading();
+          LoadingService().showError('Something is wrong.');
         }
       }
     }

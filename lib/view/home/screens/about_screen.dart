@@ -15,7 +15,7 @@ class AboutScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // App Name
-            Text(
+            const Text(
               'App Name',
               style: TextStyle(
                 fontSize: 24,
@@ -35,7 +35,7 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 32),
 
             // Description
-            Text(
+            const Text(
               'This app is designed to help NGOs and Restaurants manage their profiles and perform various tasks efficiently. The app offers features such as profile editing, viewing organization details, and more.',
               style: TextStyle(
                 fontSize: 16,
@@ -45,7 +45,7 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 32),
 
             // Developers
-            Text(
+            const Text(
               'Developers',
               style: TextStyle(
                 fontSize: 18,
@@ -53,7 +53,7 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               '1. Developer One\n2. Developer Two\n3. Developer Three',
               style: TextStyle(
                 fontSize: 16,
@@ -63,7 +63,7 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 32),
 
             // Contact Information
-            Text(
+            const Text(
               'Contact Us',
               style: TextStyle(
                 fontSize: 18,
@@ -71,7 +71,7 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               'Email: support@appname.com\nPhone: +1 234 567 890',
               style: TextStyle(
                 fontSize: 16,

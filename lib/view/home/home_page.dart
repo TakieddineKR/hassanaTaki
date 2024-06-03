@@ -15,8 +15,8 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   int index = 0;
   final screens = [
-    const DonationRequestsPage(),
-    AddRequestScreen(),
+    DonationRequestsPage(),
+    const AddRequestScreen(),
     const DonationHistoryScreen(),
     const SettingsScreen(),
   ];
@@ -34,8 +34,7 @@ class _NavBarState extends State<NavBar> {
         ),
         child: NavigationBar(
           selectedIndex: index,
-          onDestinationSelected: (index) =>
-              setState(() => this.index = index), // Corrected typo here
+          onDestinationSelected: (index) => setState(() => this.index = index), // Corrected typo here
           destinations: const [
             NavigationDestination(
               icon: Icon(

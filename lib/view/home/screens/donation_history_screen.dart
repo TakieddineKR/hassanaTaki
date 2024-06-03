@@ -8,22 +8,21 @@ class DonationHistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DonationHistoryController controller =
-        Get.put(DonationHistoryController());
-
+    final donationController = Get.put(DonationHistoryController());
+    donationController.fetchDonationRequests();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Donation History'),
       ),
-      body: Obx(() {
-        if (controller.isLoading.value) {
+      body: GetBuilder<DonationHistoryController>(builder: (controller) {
+        if (controller.isLoadingErrorDonation) {
+          const Center(
+            child: Text("Something is wrong, please try later"),
+          );
+        }
+        if (controller.isLoadingDonation) {
           return const Center(child: CircularProgressIndicator());
         }
-
-        if (controller.donationRequests.isEmpty) {
-          return const Center(child: Text('No donation requests available.'));
-        }
-
         return ListView.separated(
           padding: const EdgeInsets.all(16.0),
           itemCount: controller.donationRequests.length,
@@ -79,14 +78,14 @@ class DonationHistoryScreen extends StatelessWidget {
                     ],
                     const SizedBox(height: 8.0),
                     Text(
-                      'Restaurant: ${request.userName ?? 'Not Available'}',
+                      'Restaurant: ${request.userName}',
                       style: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      'Phone: ${request.orderPhone ?? 'Not Available'}',
+                      'Phone: ${request.orderPhone}',
                       style: const TextStyle(fontSize: 16.0),
                     ),
                     const SizedBox(height: 16.0),

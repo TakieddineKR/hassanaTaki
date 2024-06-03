@@ -5,21 +5,21 @@ import '../../../controllers/edite_profile_controller.dart';
 class EditProfilePage extends StatelessWidget {
   final String? userId; // userId can be null
 
-  EditProfilePage({this.userId});
+  const EditProfilePage({super.key, this.userId});
 
   @override
   Widget build(BuildContext context) {
-    if (userId == null) return Text('Error: No user ID provided');
+    if (userId == null) return const Text('Error: No user ID provided');
 
     ProfileController profileController = Get.put(ProfileController(userId!));
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        title: const Text('Edit Profile'),
       ),
       body: Obx(() {
         if (profileController.isLoading.value) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else {
           return SingleChildScrollView(
             child: Padding(
@@ -27,48 +27,34 @@ class EditProfilePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Organization Name',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const Text('Organization Name', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   TextFormField(
                     controller: profileController.organizationNameController,
-                    decoration: InputDecoration(
-                        labelText: 'Name', prefixIcon: Icon(Icons.business)),
+                    decoration: const InputDecoration(labelText: 'Name', prefixIcon: Icon(Icons.business)),
                   ),
-                  SizedBox(height: 16),
-                  Text('Location',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 16),
+                  const Text('Location', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   TextFormField(
                     controller: profileController.locationController,
-                    decoration: InputDecoration(
-                        labelText: 'Location',
-                        prefixIcon: Icon(Icons.location_on)),
+                    decoration: const InputDecoration(labelText: 'Location', prefixIcon: Icon(Icons.location_on)),
                   ),
-                  SizedBox(height: 16),
-                  Text('Phone Number',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 16),
+                  const Text('Phone Number', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   TextFormField(
                     controller: profileController.phoneNumberController,
-                    decoration: InputDecoration(
-                        labelText: 'Phone Number',
-                        prefixIcon: Icon(Icons.phone)),
+                    decoration: const InputDecoration(labelText: 'Phone Number', prefixIcon: Icon(Icons.phone)),
                   ),
-                  SizedBox(height: 16),
-                  Text('Password',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 16),
+                  const Text('Password', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   TextFormField(
                     controller: profileController.passwordController,
                     obscureText: true,
-                    decoration: InputDecoration(
-                        labelText: 'Password', prefixIcon: Icon(Icons.lock)),
+                    decoration: const InputDecoration(labelText: 'Password', prefixIcon: Icon(Icons.lock)),
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   ElevatedButton(
                     onPressed: profileController.applyModifications,
-                    child: Text('Apply Modifications'),
+                    child: const Text('Apply Modifications'),
                   ),
                 ],
               ),
