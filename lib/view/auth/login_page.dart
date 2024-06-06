@@ -6,6 +6,7 @@ import '../../core/functions/validator.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     LoginController loginController = Get.put(LoginController());
@@ -19,32 +20,38 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 20),
-                  //HASSANA
                   const Text(
-                    'HASSA',
+                    'HASSANA',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 45,
+                      fontFamily: 'BeautifulScript', // Custom font for HASSANA
+                      color: Color.fromARGB(255, 0, 0, 0),
                     ),
                   ),
                   const SizedBox(height: 10),
                   Image.asset(
                     'assets/images/photo1.jpg',
-                    width: 250,
-                    height: 250,
+                    width: 200,
+                    height: 200,
                   ),
-
-                  const Text(
-                    'Thank you for your donation',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color.fromARGB(255, 0, 0, 0),
+                  const SizedBox(height: 20),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: const Text(
+                      'Your generosity makes a difference. Thank you for supporting those in need.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
 
-                  //username textfield
+                  // Username textfield
                   LoginTextField(
                     hintText: 'Email',
                     obscureText: false,
@@ -53,7 +60,7 @@ class LoginPage extends StatelessWidget {
                         loginController.emailController = value!,
                   ),
                   const SizedBox(height: 10),
-                  //Password textfield
+                  // Password textfield
                   LoginTextField(
                     hintText: 'Password',
                     obscureText: true,
@@ -73,9 +80,9 @@ class LoginPage extends StatelessWidget {
                             //! NAVIGATE TO FORGOT PASSWORD
                           },
                           child: const Text(
-                            "Forgot Password",
+                            "Forgot Password?",
                             style: TextStyle(
-                              color: Color.fromARGB(255, 50, 98, 53),
+                              color: Colors.blue,
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
                             ),
@@ -85,8 +92,8 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 10),
-                  //sign in button
+                  const SizedBox(height: 20),
+                  // Sign in button
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: GestureDetector(
@@ -111,31 +118,34 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 20),
-                  // not a member? register now
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Not a member?  ',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () => loginController.navToSignup(),
-                        child: const Text(
-                          'Regiater Now',
+                  const SizedBox(height: 60),
+                  // Not a member? Register now
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Not a member? ',
                           style: TextStyle(
-                            color: Color.fromARGB(255, 10, 131, 197),
+                            color: Colors.black,
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
                           ),
                         ),
-                      ),
-                    ],
+                        InkWell(
+                          onTap: () => loginController.navToSignup(),
+                          child: const Text(
+                            'Register Now',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -159,6 +169,7 @@ class LoginTextField extends StatelessWidget {
   final String? hintText;
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved;
+
   @override
   Widget build(BuildContext context) {
     return Padding(

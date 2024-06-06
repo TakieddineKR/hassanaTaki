@@ -67,4 +67,9 @@ class SignUpController extends GetxController {
       }
     }
   }
+
+  void updateRadioValue(int value) {
+    radioValue = value;
+    update();
+  }
 }

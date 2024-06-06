@@ -29,9 +29,7 @@ class SignUpPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  //Text of Create your account
                   const SizedBox(height: 20),
-
                   const Text(
                     'Create your account',
                     style: TextStyle(
@@ -40,54 +38,52 @@ class SignUpPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-
                   const Text(
-                    'شكرا على تبرعكم',
+                    'تبرعكم يسهم في تغيير الحياة. شكرًا لدعمكم السخي',
                     style: TextStyle(
                       fontSize: 20,
                       color: Color.fromARGB(255, 0, 0, 0),
                     ),
                   ),
                   const SizedBox(height: 50),
-
-                  // Radio buttons for selecting NGO or Restaurant
-
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      children: [
-                        Radio(
-                          value: 1,
-                          groupValue: signUpController.radioValue,
-                          onChanged: (value) {
-                            signUpController.radioValue = value!;
-                          },
-                        ),
-                        const Text(
-                          'NGOs',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(width: 50),
-                        Radio(
-                          value: 2,
-                          groupValue: signUpController.radioValue,
-                          onChanged: (value) {
-                            signUpController.radioValue = value!;
-                          },
-                        ),
-                        const Text(
-                          'Resturant',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                    child: GetBuilder<SignUpController>(
+                      builder: (_) {
+                        return Row(
+                          children: [
+                            Radio(
+                              value: 1,
+                              groupValue: signUpController.radioValue,
+                              onChanged: (value) {
+                                signUpController.updateRadioValue(value!);
+                              },
+                            ),
+                            const Text(
+                              'NGOs',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(width: 50),
+                            Radio(
+                              value: 2,
+                              groupValue: signUpController.radioValue,
+                              onChanged: (value) {
+                                signUpController.updateRadioValue(value!);
+                              },
+                            ),
+                            const Text(
+                              'Restaurant',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
-
-                  //username textfield
                   CustomTextField(
                     onSaved: (value) =>
                         signUpController.emailController = value!,
@@ -96,16 +92,14 @@ class SignUpPage extends StatelessWidget {
                     controller: null,
                   ),
                   const SizedBox(height: 10),
-                  //User name textfield
                   CustomTextField(
                     onSaved: (value) =>
                         signUpController.usernameController = value!,
-                    hintText: 'User Name',
+                    hintText: 'User Organization name',
                     validator: (value) => validator(value!, 5, 255, 'username'),
                     controller: null,
                   ),
                   const SizedBox(height: 10),
-                  //passsword textfield
                   CustomTextField(
                     onSaved: (value) =>
                         signUpController.passwordController = value!,
@@ -115,7 +109,6 @@ class SignUpPage extends StatelessWidget {
                     controller: null,
                   ),
                   const SizedBox(height: 10),
-                  //Confirm password textfield
                   CustomTextField(
                     onSaved: (value) =>
                         signUpController.confirmpasswordController = value!,
@@ -125,16 +118,14 @@ class SignUpPage extends StatelessWidget {
                     controller: null,
                   ),
                   const SizedBox(height: 15),
-
                   CustomTextField(
                     onSaved: (value) =>
                         signUpController.adressController = value!,
-                    hintText: 'Adress',
+                    hintText: 'Address',
                     validator: (value) => validator(value!, 5, 255, ''),
                     controller: null,
                   ),
                   const SizedBox(height: 15),
-                  //Phone Number textfield
                   CustomTextField(
                     onSaved: (value) =>
                         signUpController.phoneController = value!,
@@ -142,9 +133,7 @@ class SignUpPage extends StatelessWidget {
                     validator: (value) => validator(value!, 5, 255, ''),
                     controller: null,
                   ),
-
                   const SizedBox(height: 20),
-                  //button of create account textfield
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 100.0),
                     child: Container(
@@ -169,7 +158,6 @@ class SignUpPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  // not a member? register now textfield
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

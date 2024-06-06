@@ -37,7 +37,8 @@ class AddRequestScreen extends StatelessWidget {
                   keyboardType: TextInputType.text,
                   labelText: 'Description',
                   hintText: 'we need chickens and selecto my friends',
-                  onChanged: (value) => addRequestController.description = value,
+                  onChanged: (value) =>
+                      addRequestController.description = value,
                   validator: (value) => validator(value!, 5, 255, ''),
                 ),
                 const SizedBox(height: 20.0),
@@ -45,9 +46,12 @@ class AddRequestScreen extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   labelText: 'Quantity',
                   hintText: '1',
-                  onChanged: (value) => addRequestController.quantity = int.tryParse(value)!,
+                  onChanged: (value) =>
+                      addRequestController.quantity = int.tryParse(value)!,
                   validator: (value) {
-                    if (value == null || int.tryParse(value) == null || int.parse(value) <= 0) {
+                    if (value == null ||
+                        int.tryParse(value) == null ||
+                        int.parse(value) <= 0) {
                       return 'Please enter a valid quantity (positive integer).';
                     }
                     return null;
@@ -61,7 +65,7 @@ class AddRequestScreen extends StatelessWidget {
                   labelText: 'Location',
                   hintText: 'Oran',
                   onChanged: (value) => addRequestController.location = value,
-                  validator: (value) => validator(value!, 5, 255, ''),
+                  validator: (value) => validator(value!, 4, 255, ''),
                 ),
                 Row(
                   children: [
@@ -100,8 +104,9 @@ class AddRequestScreen extends StatelessWidget {
                 RequestTextField(
                   keyboardType: TextInputType.phone,
                   labelText: 'Phone Number',
-                  hintText: '0555928275',
-                  onChanged: (value) => addRequestController.phoneNumber = value,
+                  hintText: '0555505050',
+                  onChanged: (value) =>
+                      addRequestController.phoneNumber = value,
                   validator: (value) => validator(value!, 5, 15, 'phone'),
                 ),
                 CheckboxListTile(
@@ -114,7 +119,8 @@ class AddRequestScreen extends StatelessWidget {
                     ),
                   ), // Change text color
                   value: addRequestController.deliveryEmployeeAvailable,
-                  onChanged: (newValue) => addRequestController.deliveryEmployeeAvailable = newValue!,
+                  onChanged: (newValue) => addRequestController
+                      .deliveryEmployeeAvailable = newValue!,
                 ),
                 const SizedBox(height: 16.0),
                 ElevatedButton(
@@ -123,8 +129,9 @@ class AddRequestScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue, // Change button color
                   ),
-                  child:
-                      const Text('Submit Request', style: TextStyle(color: Colors.white)), // Change button text color
+                  child: const Text('Submit Request',
+                      style: TextStyle(
+                          color: Colors.white)), // Change button text color
                 ),
               ],
             ),
@@ -167,7 +174,8 @@ class RequestTextField extends StatelessWidget {
         border: OutlineInputBorder(
           // Add border
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.blue), // Change border color
+          borderSide:
+              const BorderSide(color: Colors.blue), // Change border color
         ),
       ),
       maxLines: null,

@@ -11,9 +11,11 @@ class DonationHistoryController extends GetxController {
   Future<UserModel> _fetchUser() async {
     // Fecth user
     final String? uid = FirebaseAuth.instance.currentUser?.uid;
-    final usersDocRef = FirebaseFirestore.instance.collection('users').doc(uid!);
+    final usersDocRef =
+        FirebaseFirestore.instance.collection('users').doc(uid!);
     DocumentSnapshot<Object?> userDoc = await usersDocRef.get();
-    final userModel = UserModel.fromJson(userDoc.data()! as Map<String, dynamic>);
+    final userModel =
+        UserModel.fromJson(userDoc.data()! as Map<String, dynamic>);
 
     return userModel;
   }
@@ -24,10 +26,12 @@ class DonationHistoryController extends GetxController {
     final userModel = await _fetchUser();
 
     String userType = userModel.userType;
-    String collectionName = userType == 'ngo' ? 'restaurant_requests' : 'ngo_requests';
+    String collectionName =
+        userType == 'ngo' ? 'restaurant_requests' : 'ngo_requests';
 
     try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection(collectionName).get();
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection(collectionName).get();
       List<OrderModel> fetchedRequests = querySnapshot.docs.map((doc) {
         return OrderModel.fromJson(doc.data() as Map<String, dynamic>);
       }).toList();
