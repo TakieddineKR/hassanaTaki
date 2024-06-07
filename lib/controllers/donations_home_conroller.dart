@@ -20,7 +20,7 @@ class DonationHomeController extends GetxController {
   }
 
   Future<UserModel> _fetchUser() async {
-    // Fecth user
+    // Fetch user
     final String? uid = FirebaseAuth.instance.currentUser?.uid;
     final usersDocRef =
         FirebaseFirestore.instance.collection('users').doc(uid!);
@@ -41,7 +41,7 @@ class DonationHomeController extends GetxController {
   }
 
   void fetchDonationRequests() async {
-    // Fecth user
+    // Fetch user
     isLoadingDonation = true;
     final userModel = await _fetchUser();
 

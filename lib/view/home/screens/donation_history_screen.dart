@@ -13,6 +13,7 @@ class DonationHistoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Donation History'),
+        backgroundColor: Colors.deepPurple[200],
       ),
       body: GetBuilder<DonationHistoryController>(builder: (controller) {
         if (controller.isLoadingErrorDonation) {
@@ -76,18 +77,6 @@ class DonationHistoryScreen extends StatelessWidget {
                       const SizedBox(height: 8.0),
                       const Text('Delivery Employee Available'),
                     ],
-                    const SizedBox(height: 8.0),
-                    Text(
-                      'Restaurant: ${request.userName}',
-                      style: const TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'Phone: ${request.orderPhone}',
-                      style: const TextStyle(fontSize: 16.0),
-                    ),
                     const SizedBox(height: 16.0),
                     Center(
                       child: ElevatedButton(

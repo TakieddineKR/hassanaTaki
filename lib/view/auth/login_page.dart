@@ -24,9 +24,15 @@ class LoginPage extends StatelessWidget {
                     'HASSANA',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 45,
-                      fontFamily: 'BeautifulScript', // Custom font for HASSANA
+                      fontSize: 50,
                       color: Color.fromARGB(255, 0, 0, 0),
+                      shadows: [
+                        Shadow(
+                          blurRadius: 10.0,
+                          color: Colors.black26,
+                          offset: Offset(2.0, 2.0),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 10),

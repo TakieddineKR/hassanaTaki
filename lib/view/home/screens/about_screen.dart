@@ -8,6 +8,7 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('About'),
+        backgroundColor: Colors.deepPurple[200],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -16,10 +17,18 @@ class AboutScreen extends StatelessWidget {
           children: [
             // App Name
             const Text(
-              'App Name',
+              'HASSANA',
               style: TextStyle(
-                fontSize: 24,
                 fontWeight: FontWeight.bold,
+                fontSize: 30,
+                color: Color.fromARGB(255, 0, 0, 0),
+                shadows: [
+                  Shadow(
+                    blurRadius: 10.0,
+                    color: Colors.black26,
+                    offset: Offset(2.0, 2.0),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 16),
@@ -54,7 +63,7 @@ class AboutScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             const Text(
-              '1. Developer One\n2. Developer Two\n3. Developer Three',
+              '1. Developer KRAOUAS TAKIEDDINE',
               style: TextStyle(
                 fontSize: 16,
                 height: 1.5,
@@ -72,7 +81,7 @@ class AboutScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             const Text(
-              'Email: support@appname.com\nPhone: +1 234 567 890',
+              'Email: Takikraouas@gmail.com\nPhone: +213 555 92 82 75',
               style: TextStyle(
                 fontSize: 16,
                 height: 1.5,

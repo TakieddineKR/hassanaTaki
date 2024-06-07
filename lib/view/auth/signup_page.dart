@@ -17,9 +17,9 @@ class SignUpPage extends StatelessWidget {
         centerTitle: true,
         title: const Text(
           'Sign Up',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.deepPurple[200],
       ),
       body: SafeArea(
         child: Center(
@@ -35,13 +35,21 @@ class SignUpPage extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                      shadows: [
+                        Shadow(
+                          blurRadius: 10.0,
+                          color: Colors.black26,
+                          offset: Offset(2.0, 2.0),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 10),
                   const Text(
                     'تبرعكم يسهم في تغيير الحياة. شكرًا لدعمكم السخي',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 17,
                       color: Color.fromARGB(255, 0, 0, 0),
                     ),
                   ),

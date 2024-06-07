@@ -16,6 +16,7 @@ class EditProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Profile'),
+        backgroundColor: Colors.deepPurple[200],
       ),
       body: Obx(() {
         if (profileController.isLoading.value) {
@@ -27,29 +28,43 @@ class EditProfilePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Organization Name', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const Text('Organization Name',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   TextFormField(
                     controller: profileController.organizationNameController,
-                    decoration: const InputDecoration(labelText: 'Name', prefixIcon: Icon(Icons.business)),
+                    decoration: const InputDecoration(
+                        labelText: 'Name', prefixIcon: Icon(Icons.business)),
                   ),
                   const SizedBox(height: 16),
-                  const Text('Location', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const Text('Location',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   TextFormField(
                     controller: profileController.locationController,
-                    decoration: const InputDecoration(labelText: 'Location', prefixIcon: Icon(Icons.location_on)),
+                    decoration: const InputDecoration(
+                        labelText: 'Location',
+                        prefixIcon: Icon(Icons.location_on)),
                   ),
                   const SizedBox(height: 16),
-                  const Text('Phone Number', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const Text('Phone Number',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   TextFormField(
                     controller: profileController.phoneNumberController,
-                    decoration: const InputDecoration(labelText: 'Phone Number', prefixIcon: Icon(Icons.phone)),
+                    decoration: const InputDecoration(
+                        labelText: 'Phone Number',
+                        prefixIcon: Icon(Icons.phone)),
                   ),
                   const SizedBox(height: 16),
-                  const Text('Password', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const Text('Password',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   TextFormField(
                     controller: profileController.passwordController,
                     obscureText: true,
-                    decoration: const InputDecoration(labelText: 'Password', prefixIcon: Icon(Icons.lock)),
+                    decoration: const InputDecoration(
+                        labelText: 'Password', prefixIcon: Icon(Icons.lock)),
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton(

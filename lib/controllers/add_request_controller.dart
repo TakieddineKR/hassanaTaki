@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
-
 import '../core/enums/order_status_enum.dart' as core_enums;
 import '../core/services/loading_service.dart';
 import '../models/order_model.dart' as model;
@@ -20,10 +19,11 @@ class AddRequestController extends GetxController {
   late String location;
   late String phoneNumber;
   DateTime date = DateTime.now();
-  bool deliveryEmployeeAvailable = true;
+  RxBool deliveryEmployeeAvailable = true.obs;
 
   //!! UUID
   Uuid uuid = const Uuid();
+
   Future<UserModel> _fetchUser() async {
     // Fetch user
     final String? uid = FirebaseAuth.instance.currentUser?.uid;
@@ -64,7 +64,7 @@ class AddRequestController extends GetxController {
           orderAddress: location,
           orderPhone: phoneNumber,
           orderDate: date,
-          hasEmployee: deliveryEmployeeAvailable,
+          hasEmployee: deliveryEmployeeAvailable.value,
           //! NOT FROM UI
           userName: userModel.name,
           orderUser: userModel.userType,

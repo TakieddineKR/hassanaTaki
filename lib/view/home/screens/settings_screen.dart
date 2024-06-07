@@ -7,7 +7,8 @@ import 'dart:io';
 
 import 'package:hassana/controllers/settings_controller.dart';
 import 'package:hassana/view/home/screens/edit_profile.dart';
-import 'package:hassana/view/home/screens/about_screen.dart'; // Ensure this import points to your AboutScreen
+import 'package:hassana/view/home/screens/about_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -29,11 +30,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     super.initState();
     userId = user?.uid ?? 'unknown_user';
+    _fetchUserName();
+  }
+
+  Future<void> _fetchUserName() async {
+    if (user != null) {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
+      setState(() {
+        userName = userDoc['name'] ?? 'User';
+      });
+    }
   }
 
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile =
+        await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {
@@ -47,31 +62,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
+        backgroundColor: Colors.deepPurple[200],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Display logged-in user's name
-            Text(
-              userName,
-              style: const TextStyle(
-                fontSize: 24, // Increased font size
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-
             // User Profile Image with option to change
             Center(
               child: GestureDetector(
                 onTap: _pickImage,
                 child: CircleAvatar(
-                  radius: 60,
+                  radius: 80,
                   backgroundImage: _imageFile != null
                       ? FileImage(_imageFile!)
-                      : const AssetImage('assets/images/photo1.jpg') as ImageProvider,
+                      : const AssetImage('assets/images/photo1.jpg')
+                          as ImageProvider,
                   child: _imageFile == null
                       ? const Icon(
                           Icons.camera_alt,
@@ -82,25 +89,51 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 32), // Increased spacing
+            const SizedBox(height: 16),
+
+            // Display logged-in user's name
+            Center(
+              child: Text(
+                userName,
+                style: const TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+            const SizedBox(height: 32),
 
             // Edit Profile
             ListTile(
-              title: const Text('Edit Profile'),
-              trailing: const Icon(Icons.arrow_forward),
+              title: const Text(
+                'Edit Profile',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ),
+              trailing: const Icon(Icons.arrow_forward, color: Colors.black),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EditProfilePage(userId: userId)),
+                  MaterialPageRoute(
+                      builder: (context) => EditProfilePage(userId: userId)),
                 );
               },
             ),
-            const Divider(),
+            const Divider(color: Colors.grey),
 
             // About
             ListTile(
-              title: const Text('About'),
-              trailing: const Icon(Icons.arrow_forward),
+              title: const Text(
+                'About',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ),
+              trailing: const Icon(Icons.arrow_forward, color: Colors.black),
               onTap: () {
                 Navigator.push(
                   context,
@@ -108,15 +141,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 );
               },
             ),
-            const Divider(),
+            const Divider(color: Colors.grey),
 
             // Log Out
             ListTile(
-              title: const Text('Log Out'),
-              trailing: const Icon(Icons.exit_to_app),
+              title: const Text(
+                'Log Out',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ),
+              trailing: const Icon(Icons.exit_to_app, color: Colors.black),
               onTap: () => settingController.logout(),
             ),
-            const Divider(),
+            const Divider(color: Colors.grey),
           ],
         ),
       ),
@@ -127,8 +166,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subject: 'Look what I made!',
           );
         },
-        label: const Text('Share the App'), // Added label
+        label: const Text('Share the App'),
         icon: const Icon(Icons.share),
+        backgroundColor: Colors.deepPurple[200],
       ),
     );
   }

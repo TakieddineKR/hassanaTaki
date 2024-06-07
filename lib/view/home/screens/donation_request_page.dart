@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hassana/controllers/donations_home_conroller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DonationRequestsPage extends StatelessWidget {
-  final DonationHomeController donationHomeController = Get.put(DonationHomeController());
+  final DonationHomeController donationHomeController =
+      Get.put(DonationHomeController());
 
   DonationRequestsPage({super.key});
 
@@ -14,6 +16,7 @@ class DonationRequestsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Donation Requests'),
+        backgroundColor: Colors.deepPurple[200],
       ),
       body: Column(
         children: [
@@ -50,7 +53,7 @@ class DonationRequestsPage extends StatelessWidget {
             child: GetBuilder<DonationHomeController>(builder: (controller) {
               final filteredRequests = controller.filteredRequests;
               if (controller.isLoadingErrorDonation) {
-                const Center(
+                return const Center(
                   child: Text("Something is wrong, please try later"),
                 );
               }
@@ -61,7 +64,8 @@ class DonationRequestsPage extends StatelessWidget {
                 itemCount: filteredRequests.length,
                 itemBuilder: (context, index) {
                   return Card(
-                    margin: const EdgeInsets.all(10), // Add some space around each card
+                    margin: const EdgeInsets.all(
+                        10), // Add some space around each card
                     color: Colors.lightBlue[50], // Change the color of the list
                     child: ExpansionTile(
                       title: Text(filteredRequests[index].userName),
@@ -78,7 +82,8 @@ class DonationRequestsPage extends StatelessWidget {
                       trailing: ElevatedButton(
                         onPressed: () {
                           // Implement the accept donation logic
-                          print('Donation accepted for ${filteredRequests[index].userName}');
+                          print(
+                              'Donation accepted for ${filteredRequests[index].userName}');
                         },
                         child: const Text('Accept'),
                       ),
@@ -88,8 +93,24 @@ class DonationRequestsPage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Text('Contact: ${filteredRequests[index].orderPhone}'),
-                              Text('Date: ${filteredRequests[index].orderDate.toString()}'),
+                              Text(
+                                  'Contact: ${filteredRequests[index].orderPhone}'),
+                              Text(
+                                  'Date: ${filteredRequests[index].orderDate.toString()}'),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  final address =
+                                      filteredRequests[index].orderAddress;
+                                  final url = Uri.parse(
+                                      'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(address)}');
+                                  if (await canLaunchUrl(url)) {
+                                    await launchUrl(url);
+                                  } else {
+                                    throw 'Could not open the map.';
+                                  }
+                                },
+                                child: const Text('Open in Maps'),
+                              ),
                             ],
                           ),
                         ),

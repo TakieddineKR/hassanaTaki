@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../controllers/add_request_controller.dart';
 import '../../../core/functions/validator.dart';
 
@@ -13,6 +12,7 @@ class AddRequestScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Donation Request'),
+        backgroundColor: Colors.deepPurple[200],
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -27,16 +27,14 @@ class AddRequestScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blue,
+                    color: Colors.black,
                   ),
                 ),
-                const SizedBox(
-                  height: 16,
-                ), // Change text color
+                const SizedBox(height: 16),
                 RequestTextField(
                   keyboardType: TextInputType.text,
                   labelText: 'Description',
-                  hintText: 'we need chickens and selecto my friends',
+                  hintText: 'Please keep your description short and clear',
                   onChanged: (value) =>
                       addRequestController.description = value,
                   validator: (value) => validator(value!, 5, 255, ''),
@@ -45,7 +43,7 @@ class AddRequestScreen extends StatelessWidget {
                 RequestTextField(
                   keyboardType: TextInputType.number,
                   labelText: 'Quantity',
-                  hintText: '1',
+                  hintText: '100',
                   onChanged: (value) =>
                       addRequestController.quantity = int.tryParse(value)!,
                   validator: (value) {
@@ -57,9 +55,7 @@ class AddRequestScreen extends StatelessWidget {
                     return null;
                   },
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 RequestTextField(
                   keyboardType: TextInputType.streetAddress,
                   labelText: 'Location',
@@ -74,9 +70,9 @@ class AddRequestScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue,
+                        color: Colors.black,
                       ),
-                    ), // Change text color
+                    ),
                     const Spacer(),
                     TextButton(
                       onPressed: () => showDatePicker(
@@ -93,14 +89,12 @@ class AddRequestScreen extends StatelessWidget {
                       }),
                       child: Text(
                         addRequestController.date.toString().substring(0, 10),
-                        style: const TextStyle(color: Colors.blue),
+                        style: const TextStyle(color: Colors.black),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
+                const SizedBox(height: 16),
                 RequestTextField(
                   keyboardType: TextInputType.phone,
                   labelText: 'Phone Number',
@@ -109,29 +103,34 @@ class AddRequestScreen extends StatelessWidget {
                       addRequestController.phoneNumber = value,
                   validator: (value) => validator(value!, 5, 15, 'phone'),
                 ),
-                CheckboxListTile(
-                  title: const Text(
-                    'Delivery Employee Available',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                    ),
-                  ), // Change text color
-                  value: addRequestController.deliveryEmployeeAvailable,
-                  onChanged: (newValue) => addRequestController
-                      .deliveryEmployeeAvailable = newValue!,
-                ),
+                Obx(() => CheckboxListTile(
+                      title: const Text(
+                        'Delivery Employee Available',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      value:
+                          addRequestController.deliveryEmployeeAvailable.value,
+                      onChanged: (newValue) {
+                        addRequestController.deliveryEmployeeAvailable.value =
+                            newValue!;
+                      },
+                      activeColor: Colors.deepPurple[200],
+                      checkColor: Colors.white,
+                    )),
                 const SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () => addRequestController.addRequest(),
-
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue, // Change button color
+                    backgroundColor: Colors.deepPurple[200],
                   ),
-                  child: const Text('Submit Request',
-                      style: TextStyle(
-                          color: Colors.white)), // Change button text color
+                  child: const Text(
+                    'Submit Request',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             ),
@@ -157,25 +156,25 @@ class RequestTextField extends StatelessWidget {
   final void Function(String)? onChanged;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       style: const TextStyle(color: Colors.black),
       keyboardType: keyboardType,
-      validator: validator, // Change text color
+      validator: validator,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
+        hintStyle: const TextStyle(color: Colors.black),
         labelStyle: const TextStyle(
           fontSize: 18.0,
           fontWeight: FontWeight.bold,
-          color: Colors.blue,
-        ), // Change label text color
+          color: Colors.black,
+        ),
         border: OutlineInputBorder(
-          // Add border
           borderRadius: BorderRadius.circular(10),
-          borderSide:
-              const BorderSide(color: Colors.blue), // Change border color
+          borderSide: const BorderSide(color: Colors.black),
         ),
       ),
       maxLines: null,

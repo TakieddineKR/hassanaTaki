@@ -32,11 +32,16 @@ class _WelcomePageState extends State<WelcomePage> {
                     const Text(
                       "HASSANA",
                       style: TextStyle(
-                        fontFamily:
-                            'BeautifulScript', // Ensure you have a custom font added
                         fontWeight: FontWeight.bold,
-                        fontSize: 40,
+                        fontSize: 50,
                         color: Color.fromARGB(255, 0, 0, 0),
+                        shadows: [
+                          Shadow(
+                            blurRadius: 10.0,
+                            color: Colors.black26,
+                            offset: Offset(2.0, 2.0),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 10),
